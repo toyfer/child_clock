@@ -1,0 +1,16 @@
+{
+  "short_name": "とけい",
+  "name": "こどもアナログとけい",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "48x48 64x64 128x128 256x256",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fceabb",
+  "theme_color": "#ffb300",
+  "description": "子供向けの楽しいアナログ時計学習アプリ。GitHub Pagesで公開。"
+}
