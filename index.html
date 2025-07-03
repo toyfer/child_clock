@@ -16,6 +16,18 @@
   <link rel="icon" href="assets/favicon.ico" />
   <!-- PWA manifest (optional) -->
   <link rel="manifest" href="assets/manifest.json" />
+  <meta name="theme-color" content="#ffb300" />
+  <link rel="apple-touch-icon" href="assets/favicon.ico" />
+  <script>
+    // PWA: Service Worker登録
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('./service-worker.js').catch(function(e){
+          console.warn('SW registration failed:', e);
+        });
+      });
+    }
+  </script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap');
     body {
@@ -222,9 +234,10 @@
 </head>
 <body>
   <div class="title">こどもアナログとけい</div>
-  <div class="desc">じかんを たのしく おぼえよう！</div>
-  <button id="font-size-btn" aria-label="文字を大きく">文字を大きく</button>
-  <div id="clock"></div>
+  <div class="desc" id="desc" aria-live="polite">じかんを たのしく おぼえよう！</div>
+  <button id="font-size-btn" aria-label="文字を大きく" title="文字を大きく">文字を大きく</button>
+  <button id="theme-btn" aria-label="テーマ切替" title="テーマ切替" style="margin-left:1em;">テーマ切替</button>
+  <div id="clock" role="img" aria-label="アナログ時計"></div>
   <script src="simple-clock.js"></script>
   <script>
     // 星の装飾をランダム配置
@@ -242,6 +255,24 @@
       document.body.style.fontSize =
         (parseFloat(getComputedStyle(document.body).fontSize) * 1.2) + 'px';
     };
+    // テーマ切替ボタン
+    const themeBtn = document.getElementById('theme-btn');
+    let dark = false;
+    themeBtn.onclick = function() {
+      dark = !dark;
+      if (dark) {
+        document.body.style.background = 'linear-gradient(135deg, #232526 0%, #414345 100%)';
+        document.body.style.color = '#fff';
+        document.getElementById('desc').style.color = '#eee';
+        themeBtn.textContent = 'ライトテーマ';
+      } else {
+        document.body.style.background = 'linear-gradient(135deg, #fceabb 0%, #f8b500 100%)';
+        document.body.style.color = '';
+        document.getElementById('desc').style.color = '#555';
+        themeBtn.textContent = 'ダークテーマ';
+      }
+    };
+    themeBtn.textContent = 'ダークテーマ';
   </script>
 </body>
 </html>
