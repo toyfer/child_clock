@@ -39,14 +39,14 @@
   <script>
     /**
      * 星の装飾をランダムにbodyへ追加する
-     * @param {number} count - 追加する星の数
+     * @param {number} starCount - 追加する星の数
      * 前提条件: body要素が存在すること
-     * 事後条件: bodyに.starクラスのdivがcount個追加される
+     * 事後条件: bodyに.starクラスのdivがstarCount個追加される
      */
-    function addRandomStars(count) {
+    function addRandomStars(starCount) {
       const body = document.body;
       if (!body) return;
-      for (let i = 0; i < count; i++) {
+      for (let i = 0; i < starCount; i++) {
         const star = document.createElement('div');
         star.className = 'star';
         star.textContent = '★';
@@ -60,25 +60,25 @@
 
     /**
      * テーマ切替ボタンの初期化・イベント登録
-     * 前提条件: #theme-btn, #descが存在
+     * 前提条件: #themeBtn, #descElemが存在
      * 事後条件: ボタン押下でテーマが切り替わる
      */
     function setupThemeToggle() {
       const themeBtn = document.getElementById('theme-btn');
-      const desc = document.getElementById('desc');
-      if (!themeBtn || !desc) return;
-      let dark = false;
+      const descElem = document.getElementById('desc');
+      if (!themeBtn || !descElem) return;
+      let isDark = false;
       themeBtn.onclick = function() {
-        dark = !dark;
-        if (dark) {
+        isDark = !isDark;
+        if (isDark) {
           document.body.style.background = 'linear-gradient(135deg, #232526 0%, #414345 100%)';
           document.body.style.color = '#fff';
-          desc.style.color = '#eee';
+          descElem.style.color = '#eee';
           themeBtn.textContent = 'ライトテーマ';
         } else {
           document.body.style.background = 'linear-gradient(135deg, #fceabb 0%, #f8b500 100%)';
           document.body.style.color = '';
-          desc.style.color = '#555';
+          descElem.style.color = '#555';
           themeBtn.textContent = 'ダークテーマ';
         }
       };

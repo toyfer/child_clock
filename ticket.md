@@ -2,11 +2,11 @@
 
 ## child_clock 改善・追加タスク一覧
 
-<!-- COT: ticket1（関数化・docstring追加）を消化済みとしてチェック -->
+<!-- COT: ticket2（命名規約統一）を消化済みとしてチェック -->
 
 ### 1. コード品質・保守性
 - [x] JavaScript の関数化・docstring追加（現状は即時関数＋グローバル変数のみ）
-- [ ] 変数名・定数名の命名規約統一（lowerCamel/UPPER_SNAKE/UpperCamel）
+- [x] 変数名・定数名の命名規約統一（lowerCamel/UPPER_SNAKE/UpperCamel）
 - [ ] エラー処理の強化（例: DOM取得失敗時の例外）
 - [ ] コメント・JSDoc充実
 

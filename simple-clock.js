@@ -12,25 +12,25 @@ function initAnalogClock(clockElem) {
   if (!clockElem) throw new Error('[simple-clock.js] #clock element not found');
 
   // ひらがな読み
-  const hira = ['','いち','に','さん','よん','ご','ろく','なな','はち','きゅう','じゅう','じゅういち','じゅうに'];
+  const HIRA = ['', 'いち', 'に', 'さん', 'よん', 'ご', 'ろく', 'なな', 'はち', 'きゅう', 'じゅう', 'じゅういち', 'じゅうに'];
 
   // 文字盤の数字配置
-  for (let h = 1; h <= 12; h++) {
-    const angle = ((h - 3) * 30) * Math.PI / 180;
-    const r = 36; // %
-    const x = 50 + Math.cos(angle) * r;
-    const y = 50 + Math.sin(angle) * r;
+  for (let hour = 1; hour <= 12; hour++) {
+    const angle = ((hour - 3) * 30) * Math.PI / 180;
+    const RADIUS = 36; // %
+    const x = 50 + Math.cos(angle) * RADIUS;
+    const y = 50 + Math.sin(angle) * RADIUS;
     const num = document.createElement('div');
     num.className = 'number';
-    if (h >= 10) num.classList.add('num-long'); // 10,11,12は長い
+    if (hour >= 10) num.classList.add('num-long'); // 10,11,12は長い
     // 数字本体
     const numMain = document.createElement('div');
     numMain.className = 'num-main';
-    numMain.textContent = h;
+    numMain.textContent = hour;
     // ひらがな
     const numHira = document.createElement('div');
     numHira.className = 'num-hira';
-    numHira.textContent = hira[h];
+    numHira.textContent = HIRA[hour];
     num.appendChild(numMain);
     num.appendChild(numHira);
     num.style.left = x + '%';
@@ -55,15 +55,15 @@ function initAnalogClock(clockElem) {
   }
 
   // 補助ラベル（12,3,6,9）
-  const labelMap = {12:'じゅうに',3:'さん',6:'ろく',9:'きゅう'};
-  for (const h of [12,3,6,9]) {
-    const angle = ((h - 3) * 30) * Math.PI / 180;
-    const r = 28; // 内側
-    const x = 50 + Math.cos(angle) * r;
-    const y = 50 + Math.sin(angle) * r;
+  const LABEL_MAP = {12:'じゅうに',3:'さん',6:'ろく',9:'きゅう'};
+  for (const hour of [12,3,6,9]) {
+    const angle = ((hour - 3) * 30) * Math.PI / 180;
+    const RADIUS_LABEL = 28; // 内側
+    const x = 50 + Math.cos(angle) * RADIUS_LABEL;
+    const y = 50 + Math.sin(angle) * RADIUS_LABEL;
     const label = document.createElement('div');
     label.className = 'label';
-    label.textContent = labelMap[h];
+    label.textContent = LABEL_MAP[hour];
     label.style.left = x + '%';
     label.style.top = y + '%';
     clockElem.appendChild(label);
@@ -100,14 +100,14 @@ function initAnalogClock(clockElem) {
    */
   function update() {
     const now = new Date();
-    const h = now.getHours() % 12;
-    const m = now.getMinutes();
-    const s = now.getSeconds();
+    const hour = now.getHours() % 12;
+    const minute = now.getMinutes();
+    const second = now.getSeconds();
     const ms = now.getMilliseconds();
     // 角度計算
-    const hourDeg = (h + m / 60) * 30;
-    const minDeg = (m + s / 60) * 6;
-    const secDeg = (s + ms / 1000) * 6;
+    const hourDeg = (hour + minute / 60) * 30;
+    const minDeg = (minute + second / 60) * 6;
+    const secDeg = (second + ms / 1000) * 6;
     hourHand.style.transform = `translate(-50%, -100%) rotate(${hourDeg}deg)`;
     minuteHand.style.transform = `translate(-50%, -100%) rotate(${minDeg}deg)`;
     secondHand.style.transform = `translate(-50%, -100%) rotate(${secDeg}deg)`;
@@ -122,9 +122,9 @@ function initAnalogClock(clockElem) {
 
 // 即時実行: #clock要素が存在すれば初期化
 (function() {
-  const clock = document.getElementById('clock');
+  const clockElem = document.getElementById('clock');
   try {
-    initAnalogClock(clock);
+    initAnalogClock(clockElem);
   } catch (e) {
     console.error(e);
   }
