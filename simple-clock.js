@@ -1,14 +1,15 @@
 // simple-clock.js
 // 単一ファイル・依存ゼロのアナログ時計
 
-(function() {
-  /**
-   * 針時計を描画・更新する超シンプルなロジック
-   * 前提: #clock 要素が存在すること
-   */
-  const clock = document.getElementById('clock');
-  console.log('[simple-clock.js] #clock:', clock); // 動作確認
-  if (!clock) return;
+/**
+ * アナログ時計を初期化し、描画・針の更新を行う
+ * @param {HTMLElement} clockElem - 時計を描画する要素
+ * 前提条件: clockElemは存在し、空であること
+ * 事後条件: clockElem内に時計盤・針・数字等が描画され、時刻に応じて針が動く
+ * @throws {Error} clockElemがnullの場合
+ */
+function initAnalogClock(clockElem) {
+  if (!clockElem) throw new Error('[simple-clock.js] #clock element not found');
 
   // ひらがな読み
   const hira = ['','いち','に','さん','よん','ご','ろく','なな','はち','きゅう','じゅう','じゅういち','じゅうに'];
@@ -35,7 +36,7 @@
     num.style.left = x + '%';
     num.style.top = y + '%';
     num.style.transform = 'translate(-50%, -50%)';
-    clock.appendChild(num);
+    clockElem.appendChild(num);
   }
 
   // --- 目盛り（分刻みの線）を追加 ---
@@ -45,14 +46,12 @@
     const r2 = i % 5 === 0 ? 32 : 38;
     const x1 = 50 + Math.cos(angle) * r1;
     const y1 = 50 + Math.sin(angle) * r1;
-    const x2 = 50 + Math.cos(angle) * r2;
-    const y2 = 50 + Math.sin(angle) * r2;
     const mark = document.createElement('div');
     mark.className = 'tick' + (i % 5 === 0 ? ' tick5' : '');
     mark.style.left = x1 + '%';
     mark.style.top = y1 + '%';
     mark.style.transform = `translate(-50%, -50%) rotate(${i * 6}deg)`;
-    clock.appendChild(mark);
+    clockElem.appendChild(mark);
   }
 
   // 補助ラベル（12,3,6,9）
@@ -67,33 +66,38 @@
     label.textContent = labelMap[h];
     label.style.left = x + '%';
     label.style.top = y + '%';
-    clock.appendChild(label);
+    clockElem.appendChild(label);
   }
 
   // 針要素
   const hourHand = document.createElement('div');
   hourHand.className = 'hand hour';
-  clock.appendChild(hourHand);
+  clockElem.appendChild(hourHand);
   const minuteHand = document.createElement('div');
   minuteHand.className = 'hand minute';
-  clock.appendChild(minuteHand);
+  clockElem.appendChild(minuteHand);
   const secondHand = document.createElement('div');
   secondHand.className = 'hand second';
-  clock.appendChild(secondHand);
+  clockElem.appendChild(secondHand);
   // 針先端丸
   const hourDot = document.createElement('div');
   hourDot.className = 'hand-dot';
-  clock.appendChild(hourDot);
+  clockElem.appendChild(hourDot);
   const minuteDot = document.createElement('div');
   minuteDot.className = 'hand-dot';
-  clock.appendChild(minuteDot);
+  clockElem.appendChild(minuteDot);
   const secondDot = document.createElement('div');
   secondDot.className = 'hand-dot';
-  clock.appendChild(secondDot);
+  clockElem.appendChild(secondDot);
   const centerDot = document.createElement('div');
   centerDot.className = 'center-dot';
-  clock.appendChild(centerDot);
+  clockElem.appendChild(centerDot);
 
+  /**
+   * 現在時刻に応じて針を回転させる
+   * 前提条件: hourHand, minuteHand, secondHand, hourDot, minuteDot, secondDotがDOM上に存在
+   * 事後条件: 針・針先端が現在時刻に応じて回転
+   */
   function update() {
     const now = new Date();
     const h = now.getHours() % 12;
@@ -114,4 +118,14 @@
     requestAnimationFrame(update);
   }
   update();
+}
+
+// 即時実行: #clock要素が存在すれば初期化
+(function() {
+  const clock = document.getElementById('clock');
+  try {
+    initAnalogClock(clock);
+  } catch (e) {
+    console.error(e);
+  }
 })();

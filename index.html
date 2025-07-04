@@ -18,6 +18,7 @@
   <link rel="manifest" href="assets/manifest.json" />
   <meta name="theme-color" content="#ffb300" />
   <link rel="apple-touch-icon" href="assets/favicon.ico" />
+  <link rel="stylesheet" href="assets/style.css" />
   <script>
     // PWA: Service Worker登録
     if ('serviceWorker' in navigator) {
@@ -28,251 +29,62 @@
       });
     }
   </script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap');
-    body {
-      background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      font-family: 'Kosugi Maru', 'Arial Rounded MT Bold', 'Arial', sans-serif;
-    }
-    .title {
-      margin-top: 2.5vh;
-      font-size: 3.2vmin;
-      font-weight: bold;
-      color: #ff9800;
-      letter-spacing: 0.1em;
-      text-shadow: 0 2px 8px #fff8, 0 0 2px #f8b500;
-      user-select: none;
-    }
-    .desc {
-      font-size: 2.1vmin;
-      color: #555;
-      margin-bottom: 2vh;
-      margin-top: 0.5vh;
-      user-select: none;
-      text-align: center;
-      text-shadow: 0 1px 2px #fff8;
-    }
-    #clock {
-      width: 90vmin;
-      height: 90vmin;
-      background: #fff;
-      border-radius: 50%;
-      box-shadow: 0 4px 32px rgba(0,0,0,0.12);
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: 8px solid #ffd54f;
-      outline: 6px solid #ffb300;
-      margin-top: 2vh;
-    }
-    .hand {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform-origin: bottom center;
-      background: #333;
-      border-radius: 4px;
-    }
-    .hour {
-      width: 12px;
-      height: 28%;
-      background: #ff7043;
-      z-index: 3;
-    }
-    .minute {
-      width: 7px;
-      height: 38%;
-      background: #29b6f6;
-      z-index: 2;
-    }
-    .second {
-      width: 3px;
-      height: 44%;
-      background: #66bb6a;
-      z-index: 1;
-    }
-    .center-dot {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 22px;
-      height: 22px;
-      background: #fffde7;
-      border: 4px solid #ffb300;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 10;
-      box-shadow: 0 0 8px #fff;
-    }
-    .number {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 7vmin;
-      height: 7vmin;
-      border-radius: 50%;
-      user-select: none;
-      pointer-events: none;
-      background: linear-gradient(135deg, #ffb74d 60%, #ffd54f 100%);
-      box-shadow: 0 2px 8px #ffecb3;
-      border: 2px solid #ffb300;
-      z-index: 2;
-    }
-    .num-main {
-      font-size: 2.8vmin;
-      font-weight: bold;
-      color: #fff;
-      text-shadow: 0 2px 8px #fff8, 0 0 2px #f8b500, 0 0 2px #b76b00;
-      line-height: 1.1;
-    }
-    .num-hira {
-      font-size: 1.5vmin;
-      color: #d84315;
-      font-family: 'Kosugi Maru', 'Arial Rounded MT Bold', 'Arial', sans-serif;
-      margin-top: 0.1em;
-      letter-spacing: 0.05em;
-      text-shadow: 0 1px 2px #fff, 0 0 2px #fff, 0 0 2px #b76b00;
-      line-height: 1.1;
-      user-select: none;
-      font-weight: bold;
-      max-width: 90%;
-      word-break: break-all;
-      text-align: center;
-      white-space: normal;
-      display: block;
-    }
-    /* 11,12だけさらに小さく */
-    .number.num-long .num-hira {
-      font-size: 1.1vmin;
-      letter-spacing: 0.01em;
-    }
-    /* 目盛り */
-    .tick {
-      position: absolute;
-      border-radius: 1px;
-      z-index: 0;
-      background: #ffe082;
-      width: 2px;
-      height: 8px;
-    }
-    .tick5 {
-      background: #ff9800;
-      width: 4px;
-      height: 18px;
-      z-index: 1;
-    }
-    /* 装飾: 星 */
-    .star {
-      position: absolute;
-      font-size: 3.5vmin;
-      color: #ffd600;
-      opacity: 0.7;
-      pointer-events: none;
-      user-select: none;
-      z-index: 20;
-    }
-    #font-size-btn {
-      margin: 1.2vh 0 0.5vh 0;
-      padding: 0.5em 1.2em;
-      font-size: 2.1vmin;
-      border-radius: 1.5em;
-      border: none;
-      background: #fffde7;
-      color: #ff9800;
-      font-family: inherit;
-      font-weight: bold;
-      box-shadow: 0 2px 8px #ffecb3;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    #font-size-btn:active {
-      background: #ffe082;
-    }
-    /* 補助ラベル */
-    .label {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      font-size: 1.5vmin;
-      color: #1976d2;
-      font-weight: bold;
-      background: #fffde7cc;
-      border-radius: 1em;
-      padding: 0.1em 0.7em;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      user-select: none;
-      z-index: 5;
-      box-shadow: 0 1px 4px #fff8;
-    }
-    /* 針先端丸 */
-    .hand-dot {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 18px;
-      height: 18px;
-      background: #fff;
-      border: 3px solid #ffb300;
-      border-radius: 50%;
-      transform: translate(-50%, -100%);
-      z-index: 8;
-      pointer-events: none;
-    }
-  </style>
 </head>
 <body>
   <div class="title">こどもアナログとけい</div>
   <div class="desc" id="desc" aria-live="polite">じかんを たのしく おぼえよう！</div>
-  <button id="font-size-btn" aria-label="文字を大きく" title="文字を大きく">文字を大きく</button>
   <button id="theme-btn" aria-label="テーマ切替" title="テーマ切替" style="margin-left:1em;">テーマ切替</button>
   <div id="clock" role="img" aria-label="アナログ時計"></div>
   <script src="simple-clock.js"></script>
   <script>
-    // 星の装飾をランダム配置
-    for (let i = 0; i < 8; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      star.textContent = '★';
-      star.style.left = (10 + Math.random() * 80) + 'vw';
-      star.style.top = (5 + Math.random() * 85) + 'vh';
-      star.style.transform = `rotate(${Math.random()*360}deg)`;
-      document.body.appendChild(star);
-    }
-    // 文字サイズ拡大ボタン
-    document.getElementById('font-size-btn').onclick = function() {
-      document.body.style.fontSize =
-        (parseFloat(getComputedStyle(document.body).fontSize) * 1.2) + 'px';
-    };
-    // テーマ切替ボタン
-    const themeBtn = document.getElementById('theme-btn');
-    let dark = false;
-    themeBtn.onclick = function() {
-      dark = !dark;
-      if (dark) {
-        document.body.style.background = 'linear-gradient(135deg, #232526 0%, #414345 100%)';
-        document.body.style.color = '#fff';
-        document.getElementById('desc').style.color = '#eee';
-        themeBtn.textContent = 'ライトテーマ';
-      } else {
-        document.body.style.background = 'linear-gradient(135deg, #fceabb 0%, #f8b500 100%)';
-        document.body.style.color = '';
-        document.getElementById('desc').style.color = '#555';
-        themeBtn.textContent = 'ダークテーマ';
+    /**
+     * 星の装飾をランダムにbodyへ追加する
+     * @param {number} count - 追加する星の数
+     * 前提条件: body要素が存在すること
+     * 事後条件: bodyに.starクラスのdivがcount個追加される
+     */
+    function addRandomStars(count) {
+      const body = document.body;
+      if (!body) return;
+      for (let i = 0; i < count; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.textContent = '★';
+        star.style.left = (10 + Math.random() * 80) + 'vw';
+        star.style.top = (5 + Math.random() * 85) + 'vh';
+        star.style.transform = `rotate(${Math.random()*360}deg)`;
+        body.appendChild(star);
       }
-    };
-    themeBtn.textContent = 'ダークテーマ';
+    }
+    addRandomStars(8);
+
+    /**
+     * テーマ切替ボタンの初期化・イベント登録
+     * 前提条件: #theme-btn, #descが存在
+     * 事後条件: ボタン押下でテーマが切り替わる
+     */
+    function setupThemeToggle() {
+      const themeBtn = document.getElementById('theme-btn');
+      const desc = document.getElementById('desc');
+      if (!themeBtn || !desc) return;
+      let dark = false;
+      themeBtn.onclick = function() {
+        dark = !dark;
+        if (dark) {
+          document.body.style.background = 'linear-gradient(135deg, #232526 0%, #414345 100%)';
+          document.body.style.color = '#fff';
+          desc.style.color = '#eee';
+          themeBtn.textContent = 'ライトテーマ';
+        } else {
+          document.body.style.background = 'linear-gradient(135deg, #fceabb 0%, #f8b500 100%)';
+          document.body.style.color = '';
+          desc.style.color = '#555';
+          themeBtn.textContent = 'ダークテーマ';
+        }
+      };
+      themeBtn.textContent = 'ダークテーマ';
+    }
+    setupThemeToggle();
   </script>
 </body>
 </html>
