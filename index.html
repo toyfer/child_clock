@@ -65,9 +65,10 @@
 
     /**
      * テーマ切替ボタンの初期化・イベント登録
+     * テーマ状態をlocalStorageで永続化
      * @throws {Error} #theme-btn, #descが見つからない場合
      * 前提条件: #themeBtn, #descElemが存在
-     * 事後条件: ボタン押下でテーマが切り替わる
+     * 事後条件: ボタン押下でテーマが切り替わり、状態が永続化される
      */
     function setupThemeToggle() {
       const themeBtn = document.getElementById('theme-btn');
@@ -80,22 +81,36 @@
         console.error('setupThemeToggle: #descが見つかりません');
         throw new Error('setupThemeToggle: #descが見つかりません');
       }
-      let isDark = false;
+      // localStorageからテーマ状態を取得
+      let isDark = localStorage.getItem('theme') === 'dark';
+      applyTheme(isDark);
       themeBtn.onclick = function() {
         isDark = !isDark;
-        if (isDark) {
-          document.body.style.background = 'linear-gradient(135deg, #232526 0%, #414345 100%)';
-          document.body.style.color = '#fff';
-          descElem.style.color = '#eee';
-          themeBtn.textContent = 'ライトテーマ';
-        } else {
-          document.body.style.background = 'linear-gradient(135deg, #fceabb 0%, #f8b500 100%)';
-          document.body.style.color = '';
-          descElem.style.color = '#555';
-          themeBtn.textContent = 'ダークテーマ';
-        }
+        applyTheme(isDark);
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
       };
-      themeBtn.textContent = 'ダークテーマ';
+      themeBtn.textContent = isDark ? 'ライトテーマ' : 'ダークテーマ';
+    }
+
+    /**
+     * テーマ適用処理
+     * @param {boolean} isDark - ダークテーマかどうか
+     * 事後条件: body, desc, ボタンの色が切り替わる
+     */
+    function applyTheme(isDark) {
+      const descElem = document.getElementById('desc');
+      const themeBtn = document.getElementById('theme-btn');
+      if (isDark) {
+        document.body.style.background = 'linear-gradient(135deg, #232526 0%, #414345 100%)';
+        document.body.style.color = '#fff';
+        if (descElem) descElem.style.color = '#eee';
+        if (themeBtn) themeBtn.textContent = 'ライトテーマ';
+      } else {
+        document.body.style.background = 'linear-gradient(135deg, #fceabb 0%, #f8b500 100%)';
+        document.body.style.color = '';
+        if (descElem) descElem.style.color = '#555';
+        if (themeBtn) themeBtn.textContent = 'ダークテーマ';
+      }
     }
     setupThemeToggle();
   </script>
