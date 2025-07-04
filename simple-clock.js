@@ -4,9 +4,9 @@
 /**
  * アナログ時計を初期化し、描画・針の更新を行う
  * @param {HTMLElement} clockElem - 時計を描画する要素
+ * @throws {Error} clockElemがnullの場合
  * 前提条件: clockElemは存在し、空であること
  * 事後条件: clockElem内に時計盤・針・数字等が描画され、時刻に応じて針が動く
- * @throws {Error} clockElemがnullの場合
  */
 function initAnalogClock(clockElem) {
   if (!clockElem) throw new Error('[simple-clock.js] #clock element not found');
@@ -36,6 +36,7 @@ function initAnalogClock(clockElem) {
     num.style.left = x + '%';
     num.style.top = y + '%';
     num.style.transform = 'translate(-50%, -50%)';
+    if (!clockElem) throw new Error('[simple-clock.js] clockElem is null during number append');
     clockElem.appendChild(num);
   }
 
@@ -51,6 +52,7 @@ function initAnalogClock(clockElem) {
     mark.style.left = x1 + '%';
     mark.style.top = y1 + '%';
     mark.style.transform = `translate(-50%, -50%) rotate(${i * 6}deg)`;
+    if (!clockElem) throw new Error('[simple-clock.js] clockElem is null during tick append');
     clockElem.appendChild(mark);
   }
 
@@ -66,35 +68,44 @@ function initAnalogClock(clockElem) {
     label.textContent = LABEL_MAP[hour];
     label.style.left = x + '%';
     label.style.top = y + '%';
+    if (!clockElem) throw new Error('[simple-clock.js] clockElem is null during label append');
     clockElem.appendChild(label);
   }
 
   // 針要素
   const hourHand = document.createElement('div');
   hourHand.className = 'hand hour';
+  if (!clockElem) throw new Error('[simple-clock.js] clockElem is null during hourHand append');
   clockElem.appendChild(hourHand);
   const minuteHand = document.createElement('div');
   minuteHand.className = 'hand minute';
+  if (!clockElem) throw new Error('[simple-clock.js] clockElem is null during minuteHand append');
   clockElem.appendChild(minuteHand);
   const secondHand = document.createElement('div');
   secondHand.className = 'hand second';
+  if (!clockElem) throw new Error('[simple-clock.js] clockElem is null during secondHand append');
   clockElem.appendChild(secondHand);
   // 針先端丸
   const hourDot = document.createElement('div');
   hourDot.className = 'hand-dot';
+  if (!clockElem) throw new Error('[simple-clock.js] clockElem is null during hourDot append');
   clockElem.appendChild(hourDot);
   const minuteDot = document.createElement('div');
   minuteDot.className = 'hand-dot';
+  if (!clockElem) throw new Error('[simple-clock.js] clockElem is null during minuteDot append');
   clockElem.appendChild(minuteDot);
   const secondDot = document.createElement('div');
   secondDot.className = 'hand-dot';
+  if (!clockElem) throw new Error('[simple-clock.js] clockElem is null during secondDot append');
   clockElem.appendChild(secondDot);
   const centerDot = document.createElement('div');
   centerDot.className = 'center-dot';
+  if (!clockElem) throw new Error('[simple-clock.js] clockElem is null during centerDot append');
   clockElem.appendChild(centerDot);
 
   /**
    * 現在時刻に応じて針を回転させる
+   * @private
    * 前提条件: hourHand, minuteHand, secondHand, hourDot, minuteDot, secondDotがDOM上に存在
    * 事後条件: 針・針先端が現在時刻に応じて回転
    */

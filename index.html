@@ -40,6 +40,7 @@
     /**
      * 星の装飾をランダムにbodyへ追加する
      * @param {number} starCount - 追加する星の数
+     * @throws {Error} body要素が存在しない場合
      * 前提条件: body要素が存在すること
      * 事後条件: bodyに.starクラスのdivがstarCount個追加される
      */
@@ -56,6 +57,7 @@
         star.style.left = (10 + Math.random() * 80) + 'vw';
         star.style.top = (5 + Math.random() * 85) + 'vh';
         star.style.transform = `rotate(${Math.random()*360}deg)`;
+        if (!body) throw new Error('addRandomStars: <body>がnull');
         body.appendChild(star);
       }
     }
@@ -63,6 +65,7 @@
 
     /**
      * テーマ切替ボタンの初期化・イベント登録
+     * @throws {Error} #theme-btn, #descが見つからない場合
      * 前提条件: #themeBtn, #descElemが存在
      * 事後条件: ボタン押下でテーマが切り替わる
      */
