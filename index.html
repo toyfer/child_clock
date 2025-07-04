@@ -45,7 +45,10 @@
      */
     function addRandomStars(starCount) {
       const body = document.body;
-      if (!body) return;
+      if (!body) {
+        console.error('addRandomStars: <body>要素が見つかりません');
+        throw new Error('addRandomStars: <body>要素が見つかりません');
+      }
       for (let i = 0; i < starCount; i++) {
         const star = document.createElement('div');
         star.className = 'star';
@@ -66,7 +69,14 @@
     function setupThemeToggle() {
       const themeBtn = document.getElementById('theme-btn');
       const descElem = document.getElementById('desc');
-      if (!themeBtn || !descElem) return;
+      if (!themeBtn) {
+        console.error('setupThemeToggle: #theme-btnが見つかりません');
+        throw new Error('setupThemeToggle: #theme-btnが見つかりません');
+      }
+      if (!descElem) {
+        console.error('setupThemeToggle: #descが見つかりません');
+        throw new Error('setupThemeToggle: #descが見つかりません');
+      }
       let isDark = false;
       themeBtn.onclick = function() {
         isDark = !isDark;
