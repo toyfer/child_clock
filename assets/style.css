@@ -1,6 +1,43 @@
 @import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap');
+/* =====================
+   テーマ用CSS変数定義
+   ===================== */
+:root {
+  --bg-gradient: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
+  --text-color: #ff9800;
+  --desc-color: #555;
+  --clock-face-color: #fff;
+  --clock-border: #ffd54f;
+  --clock-outline: #ffb300;
+  --hand-hour-color: #ff7043;
+  --hand-minute-color: #29b6f6;
+  --hand-second-color: #66bb6a;
+  --hand-bg: #333;
+  --center-dot-bg: #fffde7;
+  --center-dot-border: #ffb300;
+  --number-bg: linear-gradient(135deg, #ffb74d 60%, #ffd54f 100%);
+  --number-shadow: #ffecb3;
+  --number-main: #fff;
+  --number-main-shadow1: #fff8;
+  --number-main-shadow2: #f8b500;
+  --number-main-shadow3: #b76b00;
+  --number-hira: #d84315;
+  --number-hira-shadow1: #fff;
+  --number-hira-shadow2: #b76b00;
+  --tick-color: #ffe082;
+  --tick5-color: #ff9800;
+  --star-color: #ffd600;
+  --button-bg: #fffde7;
+  --button-fg: #ff9800;
+  --button-shadow: #ffecb3;
+  --button-active-bg: #ffe082;
+  --label-bg: #fffde7cc;
+  --label-fg: #1976d2;
+  --label-shadow: #fff8;
+}
 body {
-  background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
+  background: var(--bg-gradient);
+  color: var(--text-color);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -13,32 +50,32 @@ body {
   margin-top: 2.5vh;
   font-size: 3.2vmin;
   font-weight: bold;
-  color: #ff9800;
+  color: var(--text-color);
   letter-spacing: 0.1em;
-  text-shadow: 0 2px 8px #fff8, 0 0 2px #f8b500;
+  text-shadow: 0 2px 8px var(--number-main-shadow1), 0 0 2px var(--number-main-shadow2);
   user-select: none;
 }
 .desc {
   font-size: 2.1vmin;
-  color: #555;
+  color: var(--desc-color);
   margin-bottom: 2vh;
   margin-top: 0.5vh;
   user-select: none;
   text-align: center;
-  text-shadow: 0 1px 2px #fff8;
+  text-shadow: 0 1px 2px var(--number-main-shadow1);
 }
 #clock {
   width: 90vmin;
   height: 90vmin;
-  background: #fff;
+  background: var(--clock-face-color);
   border-radius: 50%;
   box-shadow: 0 4px 32px rgba(0,0,0,0.12);
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 8px solid #ffd54f;
-  outline: 6px solid #ffb300;
+  border: 8px solid var(--clock-border);
+  outline: 6px solid var(--clock-outline);
   margin-top: 2vh;
 }
 .hand {
@@ -46,25 +83,25 @@ body {
   left: 50%;
   top: 50%;
   transform-origin: bottom center;
-  background: #333;
+  background: var(--hand-bg);
   border-radius: 4px;
 }
 .hour {
   width: 12px;
   height: 28%;
-  background: #ff7043;
+  background: var(--hand-hour-color);
   z-index: 3;
 }
 .minute {
   width: 7px;
   height: 38%;
-  background: #29b6f6;
+  background: var(--hand-minute-color);
   z-index: 2;
 }
 .second {
   width: 3px;
   height: 44%;
-  background: #66bb6a;
+  background: var(--hand-second-color);
   z-index: 1;
 }
 .center-dot {
@@ -73,8 +110,8 @@ body {
   top: 50%;
   width: 22px;
   height: 22px;
-  background: #fffde7;
-  border: 4px solid #ffb300;
+  background: var(--center-dot-bg);
+  border: 4px solid var(--center-dot-border);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
@@ -93,25 +130,25 @@ body {
   border-radius: 50%;
   user-select: none;
   pointer-events: none;
-  background: linear-gradient(135deg, #ffb74d 60%, #ffd54f 100%);
-  box-shadow: 0 2px 8px #ffecb3;
-  border: 2px solid #ffb300;
+  background: var(--number-bg);
+  box-shadow: 0 2px 8px var(--number-shadow);
+  border: 2px solid var(--clock-outline);
   z-index: 2;
 }
 .num-main {
   font-size: 2.8vmin;
   font-weight: bold;
-  color: #fff;
-  text-shadow: 0 2px 8px #fff8, 0 0 2px #f8b500, 0 0 2px #b76b00;
+  color: var(--number-main);
+  text-shadow: 0 2px 8px var(--number-main-shadow1), 0 0 2px var(--number-main-shadow2), 0 0 2px var(--number-main-shadow3);
   line-height: 1.1;
 }
 .num-hira {
   font-size: 1.5vmin;
-  color: #d84315;
+  color: var(--number-hira);
   font-family: 'Kosugi Maru', 'Arial Rounded MT Bold', 'Arial', sans-serif;
   margin-top: 0.1em;
   letter-spacing: 0.05em;
-  text-shadow: 0 1px 2px #fff, 0 0 2px #fff, 0 0 2px #b76b00;
+  text-shadow: 0 1px 2px var(--number-hira-shadow1), 0 0 2px var(--number-hira-shadow1), 0 0 2px var(--number-hira-shadow2);
   line-height: 1.1;
   user-select: none;
   font-weight: bold;
@@ -131,12 +168,12 @@ body {
   position: absolute;
   border-radius: 1px;
   z-index: 0;
-  background: #ffe082;
+  background: var(--tick-color);
   width: 2px;
   height: 8px;
 }
 .tick5 {
-  background: #ff9800;
+  background: var(--tick5-color);
   width: 4px;
   height: 18px;
   z-index: 1;
@@ -145,7 +182,7 @@ body {
 .star {
   position: absolute;
   font-size: 3.5vmin;
-  color: #ffd600;
+  color: var(--star-color);
   opacity: 0.7;
   pointer-events: none;
   user-select: none;
@@ -157,16 +194,16 @@ body {
   font-size: 2.1vmin;
   border-radius: 1.5em;
   border: none;
-  background: #fffde7;
-  color: #ff9800;
+  background: var(--button-bg);
+  color: var(--button-fg);
   font-family: inherit;
   font-weight: bold;
-  box-shadow: 0 2px 8px #ffecb3;
+  box-shadow: 0 2px 8px var(--button-shadow);
   cursor: pointer;
   transition: background 0.2s;
 }
 #theme-btn:active {
-  background: #ffe082;
+  background: var(--button-active-bg);
 }
 /* 補助ラベル */
 .label {
@@ -174,16 +211,16 @@ body {
   left: 50%;
   top: 50%;
   font-size: 1.5vmin;
-  color: #1976d2;
+  color: var(--label-fg);
   font-weight: bold;
-  background: #fffde7cc;
+  background: var(--label-bg);
   border-radius: 1em;
   padding: 0.1em 0.7em;
   transform: translate(-50%, -50%);
   pointer-events: none;
   user-select: none;
   z-index: 5;
-  box-shadow: 0 1px 4px #fff8;
+  box-shadow: 0 1px 4px var(--label-shadow);
 }
 /* 針先端丸 */
 .hand-dot {
@@ -192,10 +229,47 @@ body {
   top: 50%;
   width: 18px;
   height: 18px;
-  background: #fff;
-  border: 3px solid #ffb300;
+  background: var(--number-main);
+  border: 3px solid var(--clock-outline);
   border-radius: 50%;
   transform: translate(-50%, -100%);
   z-index: 8;
   pointer-events: none;
 }
+/* =====================
+   ダークテーマ用CSS変数
+   ===================== */
+.theme-dark {
+  --bg-gradient: linear-gradient(135deg, #232526 0%, #414345 100%);
+  --text-color: #fff;
+  --desc-color: #eee;
+  --clock-face-color: #232526;
+  --clock-border: #616161;
+  --clock-outline: #212121;
+  --hand-hour-color: #ffb74d;
+  --hand-minute-color: #4fc3f7;
+  --hand-second-color: #81c784;
+  --hand-bg: #fff;
+  --center-dot-bg: #333;
+  --center-dot-border: #ffb300;
+  --number-bg: linear-gradient(135deg, #616161 60%, #424242 100%);
+  --number-shadow: #222;
+  --number-main: #fffde7;
+  --number-main-shadow1: #0008;
+  --number-main-shadow2: #ffb300;
+  --number-main-shadow3: #333;
+  --number-hira: #ffb300;
+  --number-hira-shadow1: #000;
+  --number-hira-shadow2: #ffb300;
+  --tick-color: #757575;
+  --tick5-color: #ffb300;
+  --star-color: #ffd600;
+  --button-bg: #333;
+  --button-fg: #ffb300;
+  --button-shadow: #222;
+  --button-active-bg: #616161;
+  --label-bg: #333c;
+  --label-fg: #ffb300;
+  --label-shadow: #0008;
+}
+/* .theme-lightは:rootと同じ値なので省略可 */
