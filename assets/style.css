@@ -82,7 +82,7 @@ body {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform-origin: 50% 100%; /* 下端を中心に */
+  transform-origin: bottom center;
   background: var(--hand-bg);
   border-radius: 4px;
 }
@@ -91,22 +91,30 @@ body {
   height: 28%;
   background: var(--hand-hour-color);
   z-index: 5;
-  /* 針の根元を中心に合わせる */
+  top: 22%; /* 針の根元を中心に合わせる */
+  left: 50%;
   transform: translate(-50%, 0) rotate(var(--hour-rotate, 0deg));
+  transform-origin: 50% 100%;
 }
 .minute {
   width: 7px;
   height: 38%;
   background: var(--hand-minute-color);
   z-index: 6;
+  top: 12%;
+  left: 50%;
   transform: translate(-50%, 0) rotate(var(--minute-rotate, 0deg));
+  transform-origin: 50% 100%;
 }
 .second {
   width: 3px;
   height: 44%;
   background: var(--hand-second-color);
   z-index: 7;
+  top: 6%;
+  left: 50%;
   transform: translate(-50%, 0) rotate(var(--second-rotate, 0deg));
+  transform-origin: 50% 100%;
 }
 .center-dot {
   position: absolute;
