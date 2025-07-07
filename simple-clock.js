@@ -119,9 +119,9 @@ function initAnalogClock(clockElem) {
     const hourDeg = (hour + minute / 60) * 30;
     const minDeg = (minute + second / 60) * 6;
     const secDeg = (second + ms / 1000) * 6;
-    hourHand.style.transform = `translate(-50%, -100%) rotate(${hourDeg}deg)`;
-    minuteHand.style.transform = `translate(-50%, -100%) rotate(${minDeg}deg)`;
-    secondHand.style.transform = `translate(-50%, -100%) rotate(${secDeg}deg)`;
+    hourHand.style.setProperty('--hour-rotate', `${hourDeg}deg`);
+    minuteHand.style.setProperty('--minute-rotate', `${minDeg}deg`);
+    secondHand.style.setProperty('--second-rotate', `${secDeg}deg`);
     // 針先端丸も追従
     hourDot.style.transform = `translate(-50%, -100%) rotate(${hourDeg}deg)`;
     minuteDot.style.transform = `translate(-50%, -100%) rotate(${minDeg}deg)`;
