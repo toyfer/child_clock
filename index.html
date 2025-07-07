@@ -33,7 +33,16 @@
 <body>
   <div class="title">こどもアナログとけい</div>
   <div class="desc" id="desc" aria-live="polite">じかんを たのしく おぼえよう！</div>
-  <button id="theme-btn" aria-label="テーマ切替" title="テーマ切替" style="margin-left:1em;">テーマ切替</button>
+  <label for="theme-select" class="visually-hidden">テーマ選択</label>
+  <select id="theme-select" aria-label="テーマ選択" style="margin-left:1em;">
+    <option value="pastel">パステル</option>
+    <option value="vivid">ビビッド</option>
+    <option value="mono">モノトーン</option>
+    <option value="high-contrast">高コントラスト</option>
+    <option value="dark">ダーク</option>
+    <option value="light">ライト</option>
+  </select>
+  <button id="theme-btn" aria-label="テーマ切替" title="テーマ切替" style="margin-left:1em;display:none;">テーマ切替</button>
   <div id="clock" role="img" aria-label="アナログ時計"></div>
   <script src="simple-clock.js"></script>
   <script>
@@ -64,48 +73,68 @@
     addRandomStars(8);
 
     /**
-     * テーマ適用処理（CSS変数方式）
-     * @param {boolean} isDark - ダークテーマかどうか
+     * テーマ適用処理（プリセット/ダーク/ライト対応）
+     * @param {string} theme - テーマ名（pastel/vivid/mono/high-contrast/dark/light）
      * 事後条件: bodyのクラスが切り替わり、CSS変数で色が反映される
      */
-    function applyTheme(isDark) {
+    function applyTheme(theme) {
+      const themeClasses = [
+        'theme-pastel', 'theme-vivid', 'theme-mono', 'theme-high-contrast', 'theme-dark', 'theme-light'
+      ];
+      document.body.classList.remove(...themeClasses);
+      if (theme === 'dark') {
+        document.body.classList.add('theme-dark');
+      } else if (theme === 'light') {
+        document.body.classList.add('theme-light');
+      } else {
+        document.body.classList.add('theme-' + theme);
+      }
+      // セレクトボックスの表示名も反映
       const descElem = document.getElementById('desc');
-      const themeBtn = document.getElementById('theme-btn');
-      document.body.classList.toggle('theme-dark', isDark);
-      // テーマ名でaria-labelやボタン文言も切替
-      if (themeBtn) themeBtn.textContent = isDark ? 'ライトテーマ' : 'ダークテーマ';
-      if (themeBtn) themeBtn.setAttribute('aria-label', isDark ? 'ライトテーマに切替' : 'ダークテーマに切替');
       if (descElem) descElem.setAttribute('aria-live', 'polite');
     }
 
     /**
-     * テーマ切替ボタンの初期化・イベント登録
+     * テーマ選択UIの初期化・イベント登録
      * テーマ状態をlocalStorageで永続化
-     * @throws {Error} #theme-btn, #descが見つからない場合
-     * 前提条件: #themeBtn, #descElemが存在
-     * 事後条件: ボタン押下でテーマが切り替わり、状態が永続化される
+     * @throws {Error} #theme-select, #descが見つからない場合
+     * 前提条件: #theme-select, #descが存在
+     * 事後条件: セレクト選択でテーマが切り替わり、状態が永続化される
      */
-    function setupThemeToggle() {
-      const themeBtn = document.getElementById('theme-btn');
+    function setupThemeSelect() {
+      const themeSelect = document.getElementById('theme-select');
       const descElem = document.getElementById('desc');
-      if (!themeBtn) {
-        console.error('setupThemeToggle: #theme-btnが見つかりません');
-        throw new Error('setupThemeToggle: #theme-btnが見つかりません');
+      if (!themeSelect) {
+        console.error('setupThemeSelect: #theme-selectが見つかりません');
+        throw new Error('setupThemeSelect: #theme-selectが見つかりません');
       }
       if (!descElem) {
-        console.error('setupThemeToggle: #descが見つかりません');
-        throw new Error('setupThemeToggle: #descが見つかりません');
+        console.error('setupThemeSelect: #descが見つかりません');
+        throw new Error('setupThemeSelect: #descが見つかりません');
       }
       // localStorageからテーマ状態を取得
-      let isDark = localStorage.getItem('theme') === 'dark';
-      applyTheme(isDark);
-      themeBtn.onclick = function() {
-        isDark = !isDark;
-        applyTheme(isDark);
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      let theme = localStorage.getItem('themePreset') || 'pastel';
+      themeSelect.value = theme;
+      applyTheme(theme);
+      themeSelect.onchange = function() {
+        theme = themeSelect.value;
+        applyTheme(theme);
+        localStorage.setItem('themePreset', theme);
       };
     }
-    setupThemeToggle();
+    setupThemeSelect();
   </script>
+  <style>
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+  </style>
 </body>
 </html>

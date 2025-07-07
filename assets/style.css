@@ -272,4 +272,62 @@ body {
   --label-fg: #ffb300;
   --label-shadow: #0008;
 }
-/* .theme-lightは:rootと同じ値なので省略可 */
+/* =====================
+   プリセットテーマ定義
+   ===================== */
+.theme-pastel {
+  --bg-gradient: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
+  --text-color: #ff9800;
+  --desc-color: #555;
+  --clock-face-color: #fff;
+  --clock-border: #ffd54f;
+  --clock-outline: #ffb300;
+  --hand-hour-color: #ffb6b9;
+  --hand-minute-color: #b5ead7;
+  --hand-second-color: #c7ceea;
+  --star-color: #ffe082;
+  --button-bg: #fffde7;
+  --button-fg: #ff9800;
+}
+.theme-vivid {
+  --bg-gradient: linear-gradient(135deg, #ff512f 0%, #dd2476 100%);
+  --text-color: #fff;
+  --desc-color: #fffde7;
+  --clock-face-color: #fff;
+  --clock-border: #ff512f;
+  --clock-outline: #dd2476;
+  --hand-hour-color: #ff512f;
+  --hand-minute-color: #29b6f6;
+  --hand-second-color: #00e676;
+  --star-color: #ffd600;
+  --button-bg: #ff512f;
+  --button-fg: #fff;
+}
+.theme-mono {
+  --bg-gradient: linear-gradient(135deg, #e0e0e0 0%, #757575 100%);
+  --text-color: #212121;
+  --desc-color: #424242;
+  --clock-face-color: #fff;
+  --clock-border: #bdbdbd;
+  --clock-outline: #757575;
+  --hand-hour-color: #757575;
+  --hand-minute-color: #bdbdbd;
+  --hand-second-color: #212121;
+  --star-color: #bdbdbd;
+  --button-bg: #e0e0e0;
+  --button-fg: #212121;
+}
+.theme-high-contrast {
+  --bg-gradient: linear-gradient(135deg, #000 0%, #222 100%);
+  --text-color: #fff;
+  --desc-color: #fff;
+  --clock-face-color: #000;
+  --clock-border: #fff;
+  --clock-outline: #ffeb3b;
+  --hand-hour-color: #ffeb3b;
+  --hand-minute-color: #00e676;
+  --hand-second-color: #ff1744;
+  --star-color: #fff;
+  --button-bg: #222;
+  --button-fg: #ffeb3b;
+}
